@@ -1,9 +1,9 @@
 {
-    "name": "iakumai/sphinxsearch-bundle",
+    "name": "maxlipsky/sphinxsearch-bundle",
     "type": "symfony-bundle",
-    "description": "Sphinx search bundle for Symfony 2",
-    "keywords": ["sphinx", "sphinxsearch", "symfony2"],
-    "homepage": "https://github.com/IAkumaI/SphinxsearchBundle",
+    "description": "Sphinx search bundle for Symfony 2.8",
+    "keywords": ["sphinx", "sphinxsearch", "symfony2.8"],
+    "homepage": "https://github.com/maxlipsky/SphinxsearchBundle.git",
     "license": "MIT",
     "authors": [
         {
