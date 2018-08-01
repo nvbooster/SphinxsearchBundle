@@ -3,7 +3,6 @@ SphinxsearchBundle
 
 With this bundle you can use Sphinx to search in your Symfony2 project.
 
-
 Installation
 ------------
 
