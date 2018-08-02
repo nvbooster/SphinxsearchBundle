@@ -3,12 +3,13 @@
 namespace IAkumaI\SphinxsearchBundle\Twig;
 
 use IAkumaI\SphinxsearchBundle\Search\Sphinxsearch;
-
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
 /**
  * Twig extension for Sphinxsearch bundle
  */
-class SphinxsearchExtension extends \Twig_Extension
+class SphinxsearchExtension extends AbstractExtension
 {
     /**
      * @var Sphinxsearch
@@ -51,7 +52,7 @@ class SphinxsearchExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            'sphinx_highlight' => new \Twig_SimpleFunction('sphinx_highlight', array('is_safe' => array('html'))),
+            new TwigFilter('sphinx_highlight', array($this, 'sphinx_highlight'), array('is_safe' => array('html'))),
         );
     }
 
