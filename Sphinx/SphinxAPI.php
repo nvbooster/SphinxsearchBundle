@@ -20,81 +20,81 @@
 /////////////////////////////////////////////////////////////////////////////
 
 /// known searchd commands
-define ( "SEARCHD_COMMAND_SEARCH",      0 );
-define ( "SEARCHD_COMMAND_EXCERPT",     1 );
-define ( "SEARCHD_COMMAND_UPDATE",      2 );
-define ( "SEARCHD_COMMAND_KEYWORDS",    3 );
-define ( "SEARCHD_COMMAND_PERSIST",     4 );
-define ( "SEARCHD_COMMAND_STATUS",      5 );
-define ( "SEARCHD_COMMAND_FLUSHATTRS",  7 );
+define ( "SEARCHD_COMMAND_SEARCH",		0 );
+define ( "SEARCHD_COMMAND_EXCERPT",		1 );
+define ( "SEARCHD_COMMAND_UPDATE",		2 );
+define ( "SEARCHD_COMMAND_KEYWORDS",	3 );
+define ( "SEARCHD_COMMAND_PERSIST",		4 );
+define ( "SEARCHD_COMMAND_STATUS",		5 );
+define ( "SEARCHD_COMMAND_FLUSHATTRS",	7 );
 
 /// current client-side command implementation versions
-define ( "VER_COMMAND_SEARCH",      0x119 );
-define ( "VER_COMMAND_EXCERPT",     0x104 );
-define ( "VER_COMMAND_UPDATE",      0x102 );
-define ( "VER_COMMAND_KEYWORDS",    0x100 );
-define ( "VER_COMMAND_STATUS",      0x100 );
-define ( "VER_COMMAND_QUERY",       0x100 );
-define ( "VER_COMMAND_FLUSHATTRS",  0x100 );
+define ( "VER_COMMAND_SEARCH",		0x119 );
+define ( "VER_COMMAND_EXCERPT",		0x104 );
+define ( "VER_COMMAND_UPDATE",		0x102 );
+define ( "VER_COMMAND_KEYWORDS",	0x100 );
+define ( "VER_COMMAND_STATUS",		0x100 );
+define ( "VER_COMMAND_QUERY",		0x100 );
+define ( "VER_COMMAND_FLUSHATTRS",	0x100 );
 
 /// known searchd status codes
-define ( "SEARCHD_OK",              0 );
-define ( "SEARCHD_ERROR",           1 );
-define ( "SEARCHD_RETRY",           2 );
-define ( "SEARCHD_WARNING",         3 );
+define ( "SEARCHD_OK",				0 );
+define ( "SEARCHD_ERROR",			1 );
+define ( "SEARCHD_RETRY",			2 );
+define ( "SEARCHD_WARNING",			3 );
 
 /// known match modes
-define ( "SPH_MATCH_ALL",           0 );
-define ( "SPH_MATCH_ANY",           1 );
-define ( "SPH_MATCH_PHRASE",        2 );
-define ( "SPH_MATCH_BOOLEAN",       3 );
-define ( "SPH_MATCH_EXTENDED",      4 );
-define ( "SPH_MATCH_FULLSCAN",      5 );
-define ( "SPH_MATCH_EXTENDED2",     6 );    // extended engine V2 (TEMPORARY, WILL BE REMOVED)
+define ( "SPH_MATCH_ALL",			0 );
+define ( "SPH_MATCH_ANY",			1 );
+define ( "SPH_MATCH_PHRASE",		2 );
+define ( "SPH_MATCH_BOOLEAN",		3 );
+define ( "SPH_MATCH_EXTENDED",		4 );
+define ( "SPH_MATCH_FULLSCAN",		5 );
+define ( "SPH_MATCH_EXTENDED2",		6 );	// extended engine V2 (TEMPORARY, WILL BE REMOVED)
 
 /// known ranking modes (ext2 only)
-define ( "SPH_RANK_PROXIMITY_BM25", 0 );    ///< default mode, phrase proximity major factor and BM25 minor one
-define ( "SPH_RANK_BM25",           1 );    ///< statistical mode, BM25 ranking only (faster but worse quality)
-define ( "SPH_RANK_NONE",           2 );    ///< no ranking, all matches get a weight of 1
-define ( "SPH_RANK_WORDCOUNT",      3 );    ///< simple word-count weighting, rank is a weighted sum of per-field keyword occurence counts
-define ( "SPH_RANK_PROXIMITY",      4 );
-define ( "SPH_RANK_MATCHANY",       5 );
-define ( "SPH_RANK_FIELDMASK",      6 );
-define ( "SPH_RANK_SPH04",          7 );
-define ( "SPH_RANK_EXPR",           8 );
-define ( "SPH_RANK_TOTAL",          9 );
+define ( "SPH_RANK_PROXIMITY_BM25",	0 );	///< default mode, phrase proximity major factor and BM25 minor one
+define ( "SPH_RANK_BM25",			1 );	///< statistical mode, BM25 ranking only (faster but worse quality)
+define ( "SPH_RANK_NONE",			2 );	///< no ranking, all matches get a weight of 1
+define ( "SPH_RANK_WORDCOUNT",		3 );	///< simple word-count weighting, rank is a weighted sum of per-field keyword occurence counts
+define ( "SPH_RANK_PROXIMITY",		4 );
+define ( "SPH_RANK_MATCHANY",		5 );
+define ( "SPH_RANK_FIELDMASK",		6 );
+define ( "SPH_RANK_SPH04",			7 );
+define ( "SPH_RANK_EXPR",			8 );
+define ( "SPH_RANK_TOTAL",			9 );
 
 /// known sort modes
-define ( "SPH_SORT_RELEVANCE",      0 );
-define ( "SPH_SORT_ATTR_DESC",      1 );
-define ( "SPH_SORT_ATTR_ASC",       2 );
-define ( "SPH_SORT_TIME_SEGMENTS",  3 );
-define ( "SPH_SORT_EXTENDED",       4 );
-define ( "SPH_SORT_EXPR",           5 );
+define ( "SPH_SORT_RELEVANCE",		0 );
+define ( "SPH_SORT_ATTR_DESC",		1 );
+define ( "SPH_SORT_ATTR_ASC",		2 );
+define ( "SPH_SORT_TIME_SEGMENTS", 	3 );
+define ( "SPH_SORT_EXTENDED", 		4 );
+define ( "SPH_SORT_EXPR", 			5 );
 
 /// known filter types
-define ( "SPH_FILTER_VALUES",       0 );
-define ( "SPH_FILTER_RANGE",        1 );
-define ( "SPH_FILTER_FLOATRANGE",   2 );
+define ( "SPH_FILTER_VALUES",		0 );
+define ( "SPH_FILTER_RANGE",		1 );
+define ( "SPH_FILTER_FLOATRANGE",	2 );
 
 /// known attribute types
-define ( "SPH_ATTR_INTEGER",        1 );
-define ( "SPH_ATTR_TIMESTAMP",      2 );
-define ( "SPH_ATTR_ORDINAL",        3 );
-define ( "SPH_ATTR_BOOL",           4 );
-define ( "SPH_ATTR_FLOAT",          5 );
-define ( "SPH_ATTR_BIGINT",         6 );
-define ( "SPH_ATTR_STRING",         7 );
-define ( "SPH_ATTR_MULTI",          0x40000001 );
-define ( "SPH_ATTR_MULTI64",            0x40000002 );
+define ( "SPH_ATTR_INTEGER",		1 );
+define ( "SPH_ATTR_TIMESTAMP",		2 );
+define ( "SPH_ATTR_ORDINAL",		3 );
+define ( "SPH_ATTR_BOOL",			4 );
+define ( "SPH_ATTR_FLOAT",			5 );
+define ( "SPH_ATTR_BIGINT",			6 );
+define ( "SPH_ATTR_STRING",			7 );
+define ( "SPH_ATTR_MULTI",			0x40000001 );
+define ( "SPH_ATTR_MULTI64",			0x40000002 );
 
 /// known grouping functions
-define ( "SPH_GROUPBY_DAY",         0 );
-define ( "SPH_GROUPBY_WEEK",        1 );
-define ( "SPH_GROUPBY_MONTH",       2 );
-define ( "SPH_GROUPBY_YEAR",        3 );
-define ( "SPH_GROUPBY_ATTR",        4 );
-define ( "SPH_GROUPBY_ATTRPAIR",    5 );
+define ( "SPH_GROUPBY_DAY",			0 );
+define ( "SPH_GROUPBY_WEEK",		1 );
+define ( "SPH_GROUPBY_MONTH",		2 );
+define ( "SPH_GROUPBY_YEAR",		3 );
+define ( "SPH_GROUPBY_ATTR",		4 );
+define ( "SPH_GROUPBY_ATTRPAIR",	5 );
 
 // important properties of PHP's integers:
 //  - always signed (one bit short of PHP_INT_SIZE)
@@ -385,91 +385,91 @@ function sphFixUint ( $value )
 /// sphinx searchd client class
 class SphinxClient
 {
-    var $_host;         ///< searchd host (default is "localhost")
-    var $_port;         ///< searchd port (default is 9312)
-    var $_offset;       ///< how many records to seek from result-set start (default is 0)
-    var $_limit;        ///< how many records to return from result-set starting at offset (default is 20)
-    var $_mode;         ///< query matching mode (default is SPH_MATCH_ALL)
-    var $_weights;      ///< per-field weights (default is 1 for all fields)
-    var $_sort;         ///< match sorting mode (default is SPH_SORT_RELEVANCE)
-    var $_sortby;       ///< attribute to sort by (defualt is "")
-    var $_min_id;       ///< min ID to match (default is 0, which means no limit)
-    var $_max_id;       ///< max ID to match (default is 0, which means no limit)
-    var $_filters;      ///< search filters
-    var $_groupby;      ///< group-by attribute name
-    var $_groupfunc;    ///< group-by function (to pre-process group-by attribute value with)
-    var $_groupsort;    ///< group-by sorting clause (to sort groups in result set with)
+    var $_host;			///< searchd host (default is "localhost")
+    var $_port;			///< searchd port (default is 9312)
+    var $_offset;		///< how many records to seek from result-set start (default is 0)
+    var $_limit;		///< how many records to return from result-set starting at offset (default is 20)
+    var $_mode;			///< query matching mode (default is SPH_MATCH_ALL)
+    var $_weights;		///< per-field weights (default is 1 for all fields)
+    var $_sort;			///< match sorting mode (default is SPH_SORT_RELEVANCE)
+    var $_sortby;		///< attribute to sort by (defualt is "")
+    var $_min_id;		///< min ID to match (default is 0, which means no limit)
+    var $_max_id;		///< max ID to match (default is 0, which means no limit)
+    var $_filters;		///< search filters
+    var $_groupby;		///< group-by attribute name
+    var $_groupfunc;	///< group-by function (to pre-process group-by attribute value with)
+    var $_groupsort;	///< group-by sorting clause (to sort groups in result set with)
     var $_groupdistinct;///< group-by count-distinct attribute
-    var $_maxmatches;   ///< max matches to retrieve
-    var $_cutoff;       ///< cutoff to stop searching at (default is 0)
-    var $_retrycount;   ///< distributed retries count
-    var $_retrydelay;   ///< distributed retries delay
-    var $_anchor;       ///< geographical anchor point
-    var $_indexweights; ///< per-index weights
-    var $_ranker;       ///< ranking mode (default is SPH_RANK_PROXIMITY_BM25)
-    var $_rankexpr;     ///< ranking mode expression (for SPH_RANK_EXPR)
-    var $_maxquerytime; ///< max query time, milliseconds (default is 0, do not limit)
-    var $_fieldweights; ///< per-field-name weights
-    var $_overrides;    ///< per-query attribute values overrides
-    var $_select;       ///< select-list (attributes or expressions, with optional aliases)
+    var $_maxmatches;	///< max matches to retrieve
+    var $_cutoff;		///< cutoff to stop searching at (default is 0)
+    var $_retrycount;	///< distributed retries count
+    var $_retrydelay;	///< distributed retries delay
+    var $_anchor;		///< geographical anchor point
+    var $_indexweights;	///< per-index weights
+    var $_ranker;		///< ranking mode (default is SPH_RANK_PROXIMITY_BM25)
+    var $_rankexpr;		///< ranking mode expression (for SPH_RANK_EXPR)
+    var $_maxquerytime;	///< max query time, milliseconds (default is 0, do not limit)
+    var $_fieldweights;	///< per-field-name weights
+    var $_overrides;	///< per-query attribute values overrides
+    var $_select;		///< select-list (attributes or expressions, with optional aliases)
 
-    var $_error;        ///< last error message
-    var $_warning;      ///< last warning message
-    var $_connerror;        ///< connection error vs remote error flag
+    var $_error;		///< last error message
+    var $_warning;		///< last warning message
+    var $_connerror;		///< connection error vs remote error flag
 
-    var $_reqs;         ///< requests array for multi-query
-    var $_mbenc;        ///< stored mbstring encoding
-    var $_arrayresult;  ///< whether $result["matches"] should be a hash or an array
-    var $_timeout;      ///< connect timeout
+    var $_reqs;			///< requests array for multi-query
+    var $_mbenc;		///< stored mbstring encoding
+    var $_arrayresult;	///< whether $result["matches"] should be a hash or an array
+    var $_timeout;		///< connect timeout
 
     /////////////////////////////////////////////////////////////////////////////
     // common stuff
     /////////////////////////////////////////////////////////////////////////////
 
     /// create a new client object and fill defaults
-    function SphinxClient ()
+    function __construct ()
     {
         // per-client-object settings
-        $this->_host        = "localhost";
-        $this->_port        = 9312;
-        $this->_path        = false;
-        $this->_socket      = false;
+        $this->_host		= "localhost";
+        $this->_port		= 9312;
+        $this->_path		= false;
+        $this->_socket		= false;
 
         // per-query settings
-        $this->_offset      = 0;
-        $this->_limit       = 20;
-        $this->_mode        = SPH_MATCH_ALL;
-        $this->_weights     = array ();
-        $this->_sort        = SPH_SORT_RELEVANCE;
-        $this->_sortby      = "";
-        $this->_min_id      = 0;
-        $this->_max_id      = 0;
-        $this->_filters     = array ();
-        $this->_groupby     = "";
-        $this->_groupfunc   = SPH_GROUPBY_DAY;
-        $this->_groupsort   = "@group desc";
+        $this->_offset		= 0;
+        $this->_limit		= 20;
+        $this->_mode		= SPH_MATCH_ALL;
+        $this->_weights		= array ();
+        $this->_sort		= SPH_SORT_RELEVANCE;
+        $this->_sortby		= "";
+        $this->_min_id		= 0;
+        $this->_max_id		= 0;
+        $this->_filters		= array ();
+        $this->_groupby		= "";
+        $this->_groupfunc	= SPH_GROUPBY_DAY;
+        $this->_groupsort	= "@group desc";
         $this->_groupdistinct= "";
-        $this->_maxmatches  = 1000;
-        $this->_cutoff      = 0;
-        $this->_retrycount  = 0;
-        $this->_retrydelay  = 0;
-        $this->_anchor      = array ();
+        $this->_maxmatches	= 1000;
+        $this->_cutoff		= 0;
+        $this->_retrycount	= 0;
+        $this->_retrydelay	= 0;
+        $this->_anchor		= array ();
         $this->_indexweights= array ();
-        $this->_ranker      = SPH_RANK_PROXIMITY_BM25;
-        $this->_rankexpr    = "";
+        $this->_ranker		= SPH_RANK_PROXIMITY_BM25;
+        $this->_rankexpr	= "";
         $this->_maxquerytime= 0;
         $this->_fieldweights= array();
-        $this->_overrides   = array();
-        $this->_select      = "*";
+        $this->_overrides 	= array();
+        $this->_select		= "*";
 
-        $this->_error       = ""; // per-reply fields (for single-query case)
-        $this->_warning     = "";
-        $this->_connerror   = false;
+        $this->_error		= ""; // per-reply fields (for single-query case)
+        $this->_warning		= "";
+        $this->_connerror	= false;
 
-        $this->_reqs        = array (); // requests storage (for multi-query case)
-        $this->_mbenc       = "";
-        $this->_arrayresult = false;
-        $this->_timeout     = 0;
+        $this->_reqs		= array ();	// requests storage (for multi-query case)
+        $this->_mbenc		= "";
+        $this->_arrayresult	= false;
+        $this->_timeout		= 0;
     }
 
     function __destruct()
@@ -936,9 +936,9 @@ class SphinxClient
     /// clear groupby settings (for multi-queries)
     function ResetGroupBy ()
     {
-        $this->_groupby     = "";
-        $this->_groupfunc   = SPH_GROUPBY_DAY;
-        $this->_groupsort   = "@group desc";
+        $this->_groupby		= "";
+        $this->_groupfunc	= SPH_GROUPBY_DAY;
+        $this->_groupsort	= "@group desc";
         $this->_groupdistinct= "";
     }
 
@@ -1078,9 +1078,9 @@ class SphinxClient
                 $req .= sphPackU64 ( $id );
                 switch ( $entry["type"] )
                 {
-                    case SPH_ATTR_FLOAT:    $req .= $this->_PackFloat ( $val ); break;
-                    case SPH_ATTR_BIGINT:   $req .= sphPackI64 ( $val ); break;
-                    default:                $req .= pack ( "N", $val ); break;
+                    case SPH_ATTR_FLOAT:	$req .= $this->_PackFloat ( $val ); break;
+                    case SPH_ATTR_BIGINT:	$req .= sphPackI64 ( $val ); break;
+                    default:				$req .= pack ( "N", $val ); break;
                 }
             }
         }
@@ -1121,7 +1121,7 @@ class SphinxClient
         $req = pack ( "nnNNN", SEARCHD_COMMAND_SEARCH, VER_COMMAND_SEARCH, $len, 0, $nreqs ) . $req; // add header
 
         if ( !( $this->_Send ( $fp, $req, $len+8 ) ) ||
-             !( $response = $this->_GetResponse ( $fp, VER_COMMAND_SEARCH ) ) )
+            !( $response = $this->_GetResponse ( $fp, VER_COMMAND_SEARCH ) ) )
         {
             $this->_MBPop ();
             return false;
@@ -1325,26 +1325,26 @@ class SphinxClient
         // fixup options
         /////////////////
 
-        if ( !isset($opts["before_match"]) )        $opts["before_match"] = "<b>";
-        if ( !isset($opts["after_match"]) )         $opts["after_match"] = "</b>";
-        if ( !isset($opts["chunk_separator"]) )     $opts["chunk_separator"] = " ... ";
-        if ( !isset($opts["limit"]) )               $opts["limit"] = 256;
-        if ( !isset($opts["limit_passages"]) )      $opts["limit_passages"] = 0;
-        if ( !isset($opts["limit_words"]) )         $opts["limit_words"] = 0;
-        if ( !isset($opts["around"]) )              $opts["around"] = 5;
-        if ( !isset($opts["exact_phrase"]) )        $opts["exact_phrase"] = false;
-        if ( !isset($opts["single_passage"]) )      $opts["single_passage"] = false;
-        if ( !isset($opts["use_boundaries"]) )      $opts["use_boundaries"] = false;
-        if ( !isset($opts["weight_order"]) )        $opts["weight_order"] = false;
-        if ( !isset($opts["query_mode"]) )          $opts["query_mode"] = false;
-        if ( !isset($opts["force_all_words"]) )     $opts["force_all_words"] = false;
-        if ( !isset($opts["start_passage_id"]) )    $opts["start_passage_id"] = 1;
-        if ( !isset($opts["load_files"]) )          $opts["load_files"] = false;
-        if ( !isset($opts["html_strip_mode"]) )     $opts["html_strip_mode"] = "index";
-        if ( !isset($opts["allow_empty"]) )         $opts["allow_empty"] = false;
-        if ( !isset($opts["passage_boundary"]) )    $opts["passage_boundary"] = "none";
-        if ( !isset($opts["emit_zones"]) )          $opts["emit_zones"] = false;
-        if ( !isset($opts["load_files_scattered"]) )        $opts["load_files_scattered"] = false;
+        if ( !isset($opts["before_match"]) )		$opts["before_match"] = "<b>";
+        if ( !isset($opts["after_match"]) )			$opts["after_match"] = "</b>";
+        if ( !isset($opts["chunk_separator"]) )		$opts["chunk_separator"] = " ... ";
+        if ( !isset($opts["limit"]) )				$opts["limit"] = 256;
+        if ( !isset($opts["limit_passages"]) )		$opts["limit_passages"] = 0;
+        if ( !isset($opts["limit_words"]) )			$opts["limit_words"] = 0;
+        if ( !isset($opts["around"]) )				$opts["around"] = 5;
+        if ( !isset($opts["exact_phrase"]) )		$opts["exact_phrase"] = false;
+        if ( !isset($opts["single_passage"]) )		$opts["single_passage"] = false;
+        if ( !isset($opts["use_boundaries"]) )		$opts["use_boundaries"] = false;
+        if ( !isset($opts["weight_order"]) )		$opts["weight_order"] = false;
+        if ( !isset($opts["query_mode"]) )			$opts["query_mode"] = false;
+        if ( !isset($opts["force_all_words"]) )		$opts["force_all_words"] = false;
+        if ( !isset($opts["start_passage_id"]) )	$opts["start_passage_id"] = 1;
+        if ( !isset($opts["load_files"]) )			$opts["load_files"] = false;
+        if ( !isset($opts["html_strip_mode"]) )		$opts["html_strip_mode"] = "index";
+        if ( !isset($opts["allow_empty"]) )			$opts["allow_empty"] = false;
+        if ( !isset($opts["passage_boundary"]) )	$opts["passage_boundary"] = "none";
+        if ( !isset($opts["emit_zones"]) )			$opts["emit_zones"] = false;
+        if ( !isset($opts["load_files_scattered"]) )		$opts["load_files_scattered"] = false;
 
 
         /////////////////
@@ -1353,16 +1353,16 @@ class SphinxClient
 
         // v.1.2 req
         $flags = 1; // remove spaces
-        if ( $opts["exact_phrase"] )    $flags |= 2;
-        if ( $opts["single_passage"] )  $flags |= 4;
-        if ( $opts["use_boundaries"] )  $flags |= 8;
-        if ( $opts["weight_order"] )    $flags |= 16;
-        if ( $opts["query_mode"] )      $flags |= 32;
-        if ( $opts["force_all_words"] ) $flags |= 64;
-        if ( $opts["load_files"] )      $flags |= 128;
-        if ( $opts["allow_empty"] )     $flags |= 256;
-        if ( $opts["emit_zones"] )      $flags |= 512;
-        if ( $opts["load_files_scattered"] )    $flags |= 1024;
+        if ( $opts["exact_phrase"] )	$flags |= 2;
+        if ( $opts["single_passage"] )	$flags |= 4;
+        if ( $opts["use_boundaries"] )	$flags |= 8;
+        if ( $opts["weight_order"] )	$flags |= 16;
+        if ( $opts["query_mode"] )		$flags |= 32;
+        if ( $opts["force_all_words"] )	$flags |= 64;
+        if ( $opts["load_files"] )		$flags |= 128;
+        if ( $opts["allow_empty"] )		$flags |= 256;
+        if ( $opts["emit_zones"] )		$flags |= 512;
+        if ( $opts["load_files_scattered"] )	$flags |= 1024;
         $req = pack ( "NN", 0, $flags ); // mode=0, flags=$flags
         $req .= pack ( "N", strlen($index) ) . $index; // req index
         $req .= pack ( "N", strlen($words) ) . $words; // req words
@@ -1391,7 +1391,7 @@ class SphinxClient
         $len = strlen($req);
         $req = pack ( "nnN", SEARCHD_COMMAND_EXCERPT, VER_COMMAND_EXCERPT, $len ) . $req; // add header
         if ( !( $this->_Send ( $fp, $req, $len+8 ) ) ||
-             !( $response = $this->_GetResponse ( $fp, VER_COMMAND_EXCERPT ) ) )
+            !( $response = $this->_GetResponse ( $fp, VER_COMMAND_EXCERPT ) ) )
         {
             $this->_MBPop ();
             return false;
@@ -1461,7 +1461,7 @@ class SphinxClient
         $len = strlen($req);
         $req = pack ( "nnN", SEARCHD_COMMAND_KEYWORDS, VER_COMMAND_KEYWORDS, $len ) . $req; // add header
         if ( !( $this->_Send ( $fp, $req, $len+8 ) ) ||
-             !( $response = $this->_GetResponse ( $fp, VER_COMMAND_KEYWORDS ) ) )
+            !( $response = $this->_GetResponse ( $fp, VER_COMMAND_KEYWORDS ) ) )
         {
             $this->_MBPop ();
             return false;
@@ -1478,11 +1478,11 @@ class SphinxClient
         $pos += 4;
         for ( $i=0; $i<$nwords; $i++ )
         {
-            list(,$len) = unpack ( "N*", substr ( $response, $pos, 4 ) );   $pos += 4;
+            list(,$len) = unpack ( "N*", substr ( $response, $pos, 4 ) );	$pos += 4;
             $tokenized = $len ? substr ( $response, $pos, $len ) : "";
             $pos += $len;
 
-            list(,$len) = unpack ( "N*", substr ( $response, $pos, 4 ) );   $pos += 4;
+            list(,$len) = unpack ( "N*", substr ( $response, $pos, 4 ) );	$pos += 4;
             $normalized = $len ? substr ( $response, $pos, $len ) : "";
             $pos += $len;
 
@@ -1653,7 +1653,7 @@ class SphinxClient
 
         $req = pack ( "nnNN", SEARCHD_COMMAND_STATUS, VER_COMMAND_STATUS, 4, 1 ); // len=4, body=1
         if ( !( $this->_Send ( $fp, $req, 12 ) ) ||
-             !( $response = $this->_GetResponse ( $fp, VER_COMMAND_STATUS ) ) )
+            !( $response = $this->_GetResponse ( $fp, VER_COMMAND_STATUS ) ) )
         {
             $this->_MBPop ();
             return false;
@@ -1666,10 +1666,10 @@ class SphinxClient
         $res = array();
         for ( $i=0; $i<$rows; $i++ )
             for ( $j=0; $j<$cols; $j++ )
-        {
-            list(,$len) = unpack ( "N*", substr ( $response, $p, 4 ) ); $p += 4;
-            $res[$i][] = substr ( $response, $p, $len ); $p += $len;
-        }
+            {
+                list(,$len) = unpack ( "N*", substr ( $response, $p, 4 ) ); $p += 4;
+                $res[$i][] = substr ( $response, $p, $len ); $p += $len;
+            }
 
         $this->_MBPop ();
         return $res;
@@ -1690,7 +1690,7 @@ class SphinxClient
 
         $req = pack ( "nnN", SEARCHD_COMMAND_FLUSHATTRS, VER_COMMAND_FLUSHATTRS, 0 ); // len=0
         if ( !( $this->_Send ( $fp, $req, 8 ) ) ||
-             !( $response = $this->_GetResponse ( $fp, VER_COMMAND_FLUSHATTRS ) ) )
+            !( $response = $this->_GetResponse ( $fp, VER_COMMAND_FLUSHATTRS ) ) )
         {
             $this->_MBPop ();
             return -1;
