@@ -5,6 +5,7 @@ namespace IAkumaI\SphinxsearchBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use IAkumaI\SphinxsearchBundle\Doctrine\Bridge;
 
 
 class Configuration implements ConfigurationInterface
@@ -29,32 +30,16 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('socket')->defaultNull()->end()
                     ->end()
                 ->end()
-            ->end();
-
-        $rootNode
-            ->children()
-                ->arrayNode('sphinx_api')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('file')->defaultValue(__DIR__.'../../Sphinx/SphinxAPI.php')->end()
-                    ->end()
-                ->end()
-            ->end();
-
-        $rootNode
-            ->children()
                 ->arrayNode('indexes')
                     ->useAttributeAsKey('key')
                     ->prototype('scalar')->end()
                 ->end()
-            ->end();
-
-        $rootNode
-            ->children()
-                ->arrayNode('doctrine')
-                    ->addDefaultsIfNotSet()
+                ->scalarNode('bridge')
+                    ->defaultValue(Bridge::class)
+                ->end()
+                ->arrayNode('doctrine_bridge')
                     ->children()
-                        ->scalarNode('entity_manager')->defaultValue('default')->end()
+                        ->scalarNode('entity_manager')->end()
                     ->end()
                 ->end()
             ->end();

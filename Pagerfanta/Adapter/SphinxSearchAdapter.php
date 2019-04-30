@@ -1,33 +1,48 @@
 <?php
+
 namespace IAkumaI\SphinxsearchBundle\Pagerfanta\Adapter;
+
+use IAkumaI\SphinxsearchBundle\Search\Sphinxsearch;
+use Pagerfanta\Adapter\AdapterInterface;
 
 /**
  * Pagerfanta pagination adapter for SphinxSearch
  *
  * @package IAkumaI\SphinxsearchBundle\Pagerfanta\Adapter
  */
-class SphinxSearchAdapter implements \Pagerfanta\Adapter\AdapterInterface
+class SphinxSearchAdapter implements AdapterInterface
 {
     /**
-     * @var \IAkumaI\SphinxsearchBundle\Search\Sphinxsearch
+     * @var Sphinxsearch
      */
     private $sphinx;
+
+    /**
+     * @var string
+     */
     private $query;
+
+    /**
+     * @var array
+     */
     private $results;
 
+    /**
+     * @var array
+     */
     private $options = [
         'max_results' => 1000,
         'entity' => [],
     ];
 
     /**
-     * @param \IAkumaI\SphinxsearchBundle\Search\Sphinxsearch $sphinx
-     * @param string $query query string
+     * @param Sphinxsearch $sphinx
+     * @param string       $query query string
      * @param string|array $entityIndex Index index_name attribute from config.yml
-     * @param array $options misc options
+     * @param array        $options misc options
      */
     public function __construct(
-        \IAkumaI\SphinxsearchBundle\Search\Sphinxsearch $sphinx,
+        Sphinxsearch $sphinx,
         $query,
         $entityIndex,
         $options = []
@@ -54,7 +69,7 @@ class SphinxSearchAdapter implements \Pagerfanta\Adapter\AdapterInterface
     {
         $this->sphinx->SetLimits($offset, $length, $this->options['max_results']);
         $this->results = $this->sphinx->searchEx($this->query, $this->options['entity']);
-        if ($this->results['total_found'] == 0) {
+        if ($this->results['total_found'] == 0 || empty($this->results['matches'])) {
             return [];
         }
         $results = array_map(
@@ -74,10 +89,14 @@ class SphinxSearchAdapter implements \Pagerfanta\Adapter\AdapterInterface
      */
     function getNbResults()
     {
-        $this->sphinx->SetLimits(1, 1, $this->options['max_results']);
-        $results = $this->sphinx->searchEx($this->query, $this->options['entity']);
+        if (empty($this->results)) {
+            $this->sphinx->SetLimits(1, 1, $this->options['max_results']);
+            $results = $this->sphinx->searchEx($this->query, $this->options['entity']);
 
-        return $results['total_found'];
+            return $results['total_found'];
+        }
+
+        return $this->results['total_found'];
     }
 
     /**
@@ -87,7 +106,9 @@ class SphinxSearchAdapter implements \Pagerfanta\Adapter\AdapterInterface
      */
     public function getSphinxResult()
     {
+        if (empty($this->results)) {
+            throw new \LogicException('Sphinx results MUST be retrieved by getSlice before calling getSphinxResult');
+        }
         return $this->results;
     }
-
 }

@@ -439,12 +439,12 @@ class SphinxClient
         $this->_offset		= 0;
         $this->_limit		= 20;
         $this->_mode		= SPH_MATCH_ALL;
-        $this->_weights		= array ();
+        $this->_weights		= [];
         $this->_sort		= SPH_SORT_RELEVANCE;
         $this->_sortby		= "";
         $this->_min_id		= 0;
         $this->_max_id		= 0;
-        $this->_filters		= array ();
+        $this->_filters		= [];
         $this->_groupby		= "";
         $this->_groupfunc	= SPH_GROUPBY_DAY;
         $this->_groupsort	= "@group desc";
@@ -453,20 +453,20 @@ class SphinxClient
         $this->_cutoff		= 0;
         $this->_retrycount	= 0;
         $this->_retrydelay	= 0;
-        $this->_anchor		= array ();
-        $this->_indexweights= array ();
+        $this->_anchor		= [];
+        $this->_indexweights= [];
         $this->_ranker		= SPH_RANK_PROXIMITY_BM25;
         $this->_rankexpr	= "";
         $this->_maxquerytime= 0;
-        $this->_fieldweights= array();
-        $this->_overrides 	= array();
+        $this->_fieldweights= [];
+        $this->_overrides 	= [];
         $this->_select		= "*";
 
         $this->_error		= ""; // per-reply fields (for single-query case)
         $this->_warning		= "";
         $this->_connerror	= false;
 
-        $this->_reqs		= array ();	// requests storage (for multi-query case)
+        $this->_reqs		= [];	// requests storage (for multi-query case)
         $this->_mbenc		= "";
         $this->_arrayresult	= false;
         $this->_timeout		= 0;
@@ -929,8 +929,8 @@ class SphinxClient
     /// clear all filters (for multi-queries)
     function ResetFilters ()
     {
-        $this->_filters = array();
-        $this->_anchor = array();
+        $this->_filters = [];
+        $this->_anchor = [];
     }
 
     /// clear groupby settings (for multi-queries)
@@ -945,7 +945,7 @@ class SphinxClient
     /// clear all attribute value overrides (for multi-queries)
     function ResetOverrides ()
     {
-        $this->_overrides = array ();
+        $this->_overrides = [];
     }
 
     //////////////////////////////////////////////////////////////////////////////
@@ -958,7 +958,7 @@ class SphinxClient
 
         $this->AddQuery ( $query, $index, $comment );
         $results = $this->RunQueries ();
-        $this->_reqs = array (); // just in case it failed too early
+        $this->_reqs = []; // just in case it failed too early
 
         if ( !is_array($results) )
             return false; // probably network error; error message should be already filled
@@ -1066,11 +1066,11 @@ class SphinxClient
 
         // attribute overrides
         $req .= pack ( "N", count($this->_overrides) );
-        foreach ( $this->_overrides as $key => $entry )
+        foreach ( $this->_overrides as $entry )
         {
             $req .= pack ( "N", strlen($entry["attr"]) ) . $entry["attr"];
             $req .= pack ( "NN", $entry["type"], count($entry["values"]) );
-            foreach ( $entry["values"] as $id=>$val )
+            foreach ( $entry["values"] as $id => $val )
             {
                 assert ( is_numeric($id) );
                 assert ( is_numeric($val) );
@@ -1128,7 +1128,7 @@ class SphinxClient
         }
 
         // query sent ok; we can reset reqs now
-        $this->_reqs = array ();
+        $this->_reqs = [];
 
         // parse and return response
         return $this->_ParseSearchResponse ( $response, $nreqs );
@@ -1140,10 +1140,10 @@ class SphinxClient
         $p = 0; // current position
         $max = strlen($response); // max position for checks, to protect against broken responses
 
-        $results = array ();
+        $results = [];
         for ( $ires=0; $ires<$nreqs && $p<$max; $ires++ )
         {
-            $results[] = array();
+            $results[] = [];
             $result =& $results[$ires];
 
             $result["error"] = "";
@@ -1168,8 +1168,8 @@ class SphinxClient
             }
 
             // read schema
-            $fields = array ();
-            $attrs = array ();
+            $fields = [];
+            $attrs = [];
 
             list(,$nfields) = unpack ( "N*", substr ( $response, $p, 4 ) ); $p += 4;
             while ( $nfields-->0 && $p<$max )
@@ -1222,7 +1222,7 @@ class SphinxClient
                     $result["matches"][$doc]["weight"] = $weight;
 
                 // parse and create attributes
-                $attrvals = array ();
+                $attrvals = [];
                 foreach ( $attrs as $attr=>$type )
                 {
                     // handle 64bit ints
@@ -1245,7 +1245,7 @@ class SphinxClient
                     list(,$val) = unpack ( "N*", substr ( $response, $p, 4 ) ); $p += 4;
                     if ( $type==SPH_ATTR_MULTI )
                     {
-                        $attrvals[$attr] = array ();
+                        $attrvals[$attr] = [];
                         $nvalues = $val;
                         while ( $nvalues-->0 && $p<$max )
                         {
@@ -1254,7 +1254,7 @@ class SphinxClient
                         }
                     } else if ( $type==SPH_ATTR_MULTI64 )
                     {
-                        $attrvals[$attr] = array ();
+                        $attrvals[$attr] = [];
                         $nvalues = $val;
                         while ( $nvalues>0 && $p<$max )
                         {
@@ -1306,7 +1306,7 @@ class SphinxClient
     /// connect to searchd server, and generate exceprts (snippets)
     /// of given documents for given query. returns false on failure,
     /// an array of snippets on success
-    function BuildExcerpts ( $docs, $index, $words, $opts=array() )
+    function BuildExcerpts ( $docs, $index, $words, $opts = [] )
     {
         assert ( is_array($docs) );
         assert ( is_string($index) );
@@ -1402,7 +1402,7 @@ class SphinxClient
         //////////////////
 
         $pos = 0;
-        $res = array ();
+        $res = [];
         $rlen = strlen($response);
         for ( $i=0; $i<count($docs); $i++ )
         {
@@ -1472,7 +1472,7 @@ class SphinxClient
         //////////////////
 
         $pos = 0;
-        $res = array ();
+        $res = [];
         $rlen = strlen($response);
         list(,$nwords) = unpack ( "N*", substr ( $response, $pos, 4 ) );
         $pos += 4;
@@ -1663,7 +1663,7 @@ class SphinxClient
         $p = 0;
         list ( $rows, $cols ) = array_values ( unpack ( "N*N*", substr ( $response, $p, 8 ) ) ); $p += 8;
 
-        $res = array();
+        $res = [];
         for ( $i=0; $i<$rows; $i++ )
             for ( $j=0; $j<$cols; $j++ )
             {

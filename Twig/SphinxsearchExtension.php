@@ -3,8 +3,8 @@
 namespace IAkumaI\SphinxsearchBundle\Twig;
 
 use IAkumaI\SphinxsearchBundle\Search\Sphinxsearch;
-use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig\Extension\AbstractExtension;
 
 /**
  * Twig extension for Sphinxsearch bundle
@@ -17,7 +17,6 @@ class SphinxsearchExtension extends AbstractExtension
     protected $searchd;
 
     /**
-     * Constructor
      * @param Sphinxsearch $searchd
      */
     public function __construct(Sphinxsearch $searchd)
@@ -27,16 +26,17 @@ class SphinxsearchExtension extends AbstractExtension
 
     /**
      * Highlight $text for the $query using $index
+     *
      * @param string $text Text content
      * @param string $index Sphinx index name
      * @param string $query Query to search
-     * @param array[optional] $options Options to pass to SphinxAPI
+     * @param array  $options Options to pass to SphinxAPI
      *
      * @return string
      */
-    public function sphinx_highlight($text, $index, $query, $options = array())
+    public function sphinx_highlight($text, $index, $query, $options = [])
     {
-        $result = $this->searchd->getClient()->BuildExcerpts(array((string)$text), $index, $query, $options);
+        $result = $this->searchd->getClient()->BuildExcerpts([(string) $text], $index, $query, $options);
 
         if (!empty($result[0])) {
             return $result[0];
@@ -46,22 +46,14 @@ class SphinxsearchExtension extends AbstractExtension
     }
 
     /**
-     * Filters list
-     * @return array
+     * {@inheritDoc}
+     *
+     * @see \Twig\Extension\ExtensionInterface::getFilters()
      */
     public function getFilters()
     {
-        return array(
-            new TwigFilter('sphinx_highlight', array($this, 'sphinx_highlight'), array('is_safe' => array('html'))),
-        );
-    }
-
-    /**
-     * Implement getName() method
-     * @return string
-     */
-    public function getName()
-    {
-        return 'iakumai_sphinxsearch_extension_0';
+        return [
+            new TwigFilter('sphinx_highlight', [$this, 'sphinx_highlight'], ['is_safe' => ['html']]),
+        ];
     }
 }

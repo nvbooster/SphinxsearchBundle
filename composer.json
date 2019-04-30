@@ -1,32 +1,45 @@
 {
-    "name": "maxlipsky/sphinxsearch-bundle",
-    "type": "symfony-bundle",
-    "description": "Sphinx search bundle for Symfony 2.8",
-    "keywords": ["sphinx", "sphinxsearch", "symfony2.8"],
-    "homepage": "https://github.com/maxlipsky/SphinxsearchBundle.git",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Valery Ozarnichuk",
-            "email": "meru.no.akuma@gmail.com",
-            "role": "Developer"
-        }
-    ],
-    "support": {
-        "email": "meru.no.akuma@gmail.com"
-    },
-    "require": {
-        "php": ">=5.3.3"
-    },
-    "autoload": {
-        "psr-0": {
-            "IAkumaI\\SphinxsearchBundle": ""
-        }
-    },
-    "target-dir": "IAkumaI/SphinxsearchBundle",
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.2-dev"
-        }
-    }
+	"name" : "nvbooster/sphinxsearch-bundle",
+	"type" : "symfony-bundle",
+	"description" : "Sphinx search bundle for Symfony",
+	"keywords" : [
+		"sphinx",
+		"sphinxsearch",
+		"symfony"
+	],
+	"homepage" : "https://github.com/nvbooster/SphinxsearchBundle.git",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Valery Ozarnichuk",
+			"email" : "meru.no.akuma@gmail.com",
+			"role" : "Developer"
+		}, {
+			"name" : "Vyacheslav Nechipurenko",
+			"email" : "nvb@aproxima.ru"
+		}
+	],
+	"support" : {
+		"email" : "meru.no.akuma@gmail.com"
+	},
+	"require" : {
+		"doctrine/orm" : "~2.5",
+		"symfony/framework-bundle" : "~3.4|~4.0",
+		"twig/twig" : "^2.4.0"
+	},
+	"suggest" : {
+		"pagerfanta/pagerfanta" : "^1.1.0|^2.0.0"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"IAkumaI\\SphinxsearchBundle\\" : ""
+		},
+		"files" : [
+			"Sphinx/SphinxAPI.php"
+		]
+	},
+	"extra" : {
+		"branch-alias" : {
+			"dev-master" : "0.4-dev"
+		}
+	}
 }

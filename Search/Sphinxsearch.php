@@ -3,7 +3,6 @@
 namespace IAkumaI\SphinxsearchBundle\Search;
 
 use SphinxClient;
-
 use IAkumaI\SphinxsearchBundle\Exception\EmptyIndexException;
 use IAkumaI\SphinxsearchBundle\Exception\NoSphinxAPIException;
 use IAkumaI\SphinxsearchBundle\Doctrine\BridgeInterface;
@@ -12,7 +11,7 @@ use IAkumaI\SphinxsearchBundle\Doctrine\BridgeInterface;
 /**
  * Sphinx search engine
  *
- * @method string GetLastError () 
+ * @method string GetLastError ()
  * @method string GetLastWarning ()
  * @method bool IsConnectError()
  * @method null SetServer ( $host, $port = 0 )
@@ -40,7 +39,7 @@ use IAkumaI\SphinxsearchBundle\Doctrine\BridgeInterface;
  * @method null ResetGroupBy ()
  * @method null ResetOverrides ()
  *
- * @method bool|array BuildExcerpts ( $docs, $index, $words, $opts=array() )
+ * @method bool|array BuildExcerpts ( $docs, $index, $words, $opts=[] )
  * @method bool|array BuildKeywords ( $query, $index, $hits )
  *
  * @method array Status ()
@@ -193,7 +192,7 @@ class Sphinxsearch
             throw new \LogicException('Bridge was not set');
         }
 
-        $results = $this->search($query, (is_string($index) ? array($index) : $index), $escape);
+        $results = $this->search($query, (is_string($index) ? [$index] : $index), $escape);
 
         if (empty($results) || !empty($results['error'])) {
             return $results;
@@ -255,8 +254,8 @@ class Sphinxsearch
      */
     public function __call($method, $args)
     {
-        if (is_callable(array($this->sphinx, $method))) {
-            return call_user_func_array(array($this->sphinx, $method), $args);
+        if (is_callable([$this->sphinx, $method])) {
+            return call_user_func_array([$this->sphinx, $method], $args);
         } else {
             trigger_error("Call to undefined method '{$method}'");
         }

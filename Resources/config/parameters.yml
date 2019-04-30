@@ -1,3 +1,0 @@
-parameters:
-    iakumai.sphinxsearch.search.class: IAkumaI\SphinxsearchBundle\Search\Sphinxsearch
-    iakumai.sphinxsearch.doctrine.bridge.class: IAkumaI\SphinxsearchBundle\Doctrine\Bridge

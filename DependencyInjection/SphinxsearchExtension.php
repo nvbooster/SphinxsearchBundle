@@ -2,49 +2,54 @@
 
 namespace IAkumaI\SphinxsearchBundle\DependencyInjection;
 
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use IAkumaI\SphinxsearchBundle\Search\Sphinxsearch;
+use IAkumaI\SphinxsearchBundle\Doctrine\Bridge;
+use Symfony\Component\DependencyInjection\Reference;
 
-
+/**
+ * @author nvb <nvb@aproxima.ru>
+ *
+ */
 class SphinxsearchExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-        $processor = new Processor();
         $configuration = new Configuration();
-
-        $config = $processor->processConfiguration($configuration, $configs);
+        $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
-        $loader->load('parameters.yml');
-        $loader->load('services.yml');
+        $loader->load('services.yaml');
 
-        if (isset($config['searchd'])) {
-            $container->setParameter('iakumai.sphinxsearch.searchd.host', $config['searchd']['host']);
-            $container->setParameter('iakumai.sphinxsearch.searchd.port', $config['searchd']['port']);
-            $container->setParameter('iakumai.sphinxsearch.searchd.socket', $config['searchd']['socket']);
+        if (!empty($config['searchd'])) {
+            $container->getDefinition(Sphinxsearch::class)
+                 ->setArguments([
+                     '$host' => $config['searchd']['host'],
+                     '$port' => $config['searchd']['port'],
+                     '$socket' => $config['searchd']['socket'],
+                ]);
         }
 
-        if (isset($config['sphinx_api'])) {
-            $container->setParameter('iakumai.sphinxsearch.sphinx_api.file', $config['sphinx_api']['file']);
+        $container->setParameter('iakumai.sphinxsearch.indexes', empty($config['indexes']) ? [] : $config['indexes']);
+
+        if (!empty($config['bridge'])) {
+            $container->getDefinition(Sphinxsearch::class)
+                ->addMethodCall('setBridge', [new Reference($config['bridge'])])
+            ;
         }
 
-        if (isset($config['indexes'])) {
-            $container->setParameter('iakumai.sphinxsearch.indexes', $config['indexes']);
+        if (!empty($config['doctrine_bridge']['entity_manager'])) {
+            $container->getDefinition(Bridge::class)
+                ->setArgument('$em', new Reference($config['doctrine_bridge']['entity_manager']))
+            ;
         }
-
-        if (isset($config['doctrine'])) {
-            $container->setParameter('iakumai.sphinxsearch.doctrine.entity_manager', $config['doctrine']['entity_manager']);
-        }
-    }
-
-    public function getAlias()
-    {
-        return 'sphinxsearch';
+        $container->getDefinition(Bridge::class)
+            ->setArgument('$indexes', '%iakumai.sphinxsearch.indexes%')
+        ;
     }
 }

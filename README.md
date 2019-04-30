@@ -8,33 +8,20 @@ Installation
 
 ### Step 1: Download SphinxsearchBundle using composer
 
-In your composer.json, add SphinxsearchBundle:
-
-```js
-{
-    "require": {
-        "iakumai/sphinxsearch-bundle": "dev-master"
-    }
-}
+```iakumai/sphinxsearch-bundle
+composer require nvbooster/sphinxsearch-bundle
 ```
 
-Now, you must update your vendors using this command :
-
-```bash
-$ php composer.phar update iakumai/sphinxsearch-bundle
-```
-
-### Step 2: Add bundle in AppKernel.php
+### Step 2: Add bundle in bundles.php
 ``` php
-// app/AppKernel.php
+// config/bundles.php
 
-public function registerBundles()
-{
-    $bundles = array(
-        // ...
-        new IAkumaI\SphinxsearchBundle\SphinxsearchBundle()
-    );
-}
+<?php
+
+return [
+	...
+	IAkumaI\SphinxsearchBundle\SphinxsearchBundle::class => ['all' => true],
+];
 ```
 
 ### Step 3: Configure your config.yml
@@ -55,18 +42,17 @@ sphinxsearch:
         # List of sphinx index names (key) and entity names (value)
         # to use it in searchEx() method
         IndexName: "Bundle:Entity"
+    bridge: IAkumaI\SphinxsearchBundle\Doctrine\Bridge
+    doctrine_bridge:
+		entity_manager: Doctrine\ORM\EntityManagerInterface
+    
 ```
 
 Services
 --------
 
-- **@iakumai.sphinxsearch.search** - base search engine to use Sphinx search.
-
-Maybe you want to use another class in **@iakumai.sphinxsearch.search** service. To do this put a full class name to the parameter named **%iakumai.sphinxsearch.search.class%**.
-
-- **@iakumai.sphinxsearch.doctrine.bridge** - bridge to dictrine datebase.
-
-Maybe you want to use another class in **@iakumai.sphinxsearch.doctrine.bridge** service. To do this put a full class name to the parameter named **%iakumai.sphinxsearch.doctrine.bridge.class%**. It must implements a `IAkumaI\SphinxsearchBundle\Doctrine\BridgeInterface`
+- **@IAkumaI\SphinxsearchBundle\Search\Sphinxsearch** - base search engine to use Sphinx search.
+- **@IAkumaI\SphinxsearchBundle\Doctrine\Bridgee** - default bridge to doctrine datebase.
 
 Exceptions
 ----------

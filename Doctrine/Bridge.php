@@ -2,9 +2,7 @@
 
 namespace IAkumaI\SphinxsearchBundle\Doctrine;
 
-use Symfony\Component\DependencyInjection\Container;
-use Doctrine\ORM\EntityManager;
-
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Bridge to find entities for search results
@@ -12,21 +10,9 @@ use Doctrine\ORM\EntityManager;
 class Bridge implements BridgeInterface
 {
     /**
-     * Symfony2 container
-     * @var Container
-     */
-    protected $container;
-
-    /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
-
-    /**
-     * EntityManager name
-     * @var string
-     */
-    protected $emName;
 
     /**
      * Indexes list
@@ -35,43 +21,36 @@ class Bridge implements BridgeInterface
      *
      * @var array
      */
-    protected $indexes = array();
+    protected $indexes = [];
 
     /**
-     * Constructor
-     *
-     * @param Container $container Symfony2 DI-container
-     * @param string[optional] $emName EntityManager name
-     * @param array[optional] $indexes List of search indexes with entity names
+     * @param EntityManagerInterface $em
+     * @param array                  $indexes List of search indexes with entity names
      */
-    public function __construct(Container $container, $emName = 'default', $indexes = array())
+    public function __construct(EntityManagerInterface $em, $indexes = [])
     {
-        $this->container = $container;
-        $this->emName = $emName;
+        $this->em = $em;
         $this->setIndexes($indexes);
     }
 
     /**
      * Get an EntityManager
-     * @return EntityManager
+     *
+     * @return EntityManagerInterface
      */
     public function getEntityManager()
     {
-        if ($this->em === null) {
-            $this->setEntityManager($this->container->get('doctrine')->getManager($this->emName));
-        }
-
         return $this->em;
     }
 
     /**
      * Set an EntityManager
      *
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      *
-     * @throws LogicException If entity manager already set
+     * @throws \LogicException If entity manager already set
      */
-    public function setEntityManager(EntityManager $em)
+    public function setEntityManager(EntityManagerInterface $em)
     {
         if ($this->em !== null) {
             throw new \LogicException('Entity manager can only be set before any results are fetched');
@@ -92,13 +71,14 @@ class Bridge implements BridgeInterface
 
     /**
      * Add entity list to sphinx search results
-     * @param  array  $results Sphinx search results
+     *
+     * @param  array        $results Sphinx search results
      * @param  string|array $index   Index name(s)
      *
      * @return array
      *
-     * @throws LogicException If results come with error
-     * @throws InvalidArgumentException If index name is not valid
+     * @throws \LogicException If results come with error
+     * @throws \InvalidArgumentException If index name is not valid
      */
     public function parseResults(array $results, $index)
     {
@@ -139,10 +119,10 @@ class Bridge implements BridgeInterface
                 continue;
             }
 
-            $entities = $this->getEntityManager()->getRepository($this->indexes[$index])->findBy(array('id' => $ids));
+            $this->getEntityManager()->getRepository($this->indexes[$index])->findBy(['id' => $ids]);
 
             foreach ($ids as $id) {
-                $results['matches'][$id]['entity'] = $entities = $this->getEntityManager()->getRepository($this->indexes[$index])->find($id);
+                $results['matches'][$id]['entity'] = $this->getEntityManager()->getRepository($this->indexes[$index])->find($id);
             }
         }
 
